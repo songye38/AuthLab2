@@ -1,16 +1,26 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { loginUser } from "../api/auth";
+import { useAuth } from "../hooks/useAuth"; // ✅ context에서 useAuth 훅 가져오기
 
 const Login = () => {
   const navigate = useNavigate();
+  const { login } = useAuth(); // ✅ 여기에서 context에서 login 꺼냄
 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    // 여기서 로그인 API 호출 예정
-    console.log("로그인 시도", { email, password });
+    try {
+      const data = await loginUser(email, password);
+      console.log("로그인 성공:", data);
+      alert("로그인 성공!");
+      login(data.userId); // ✅ userId나 email 등 로그인된 사용자 정보
+      navigate("/");
+    } catch (error: any) {
+      alert(error.message);
+    }
   };
 
   return (
