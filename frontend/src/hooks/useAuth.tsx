@@ -20,11 +20,12 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
   // ✅ 마운트 시 로그인 상태 복원
   useEffect(() => {
     const token = localStorage.getItem("access_token");
+    const user_name = localStorage.getItem("user_name");
     if (token) {
       // 예시로 그냥 토큰이 있으면 로그인된 걸로 치는 경우
       // 실제로는 토큰 decode하거나 사용자 정보 요청해서 setUser 해주는 게 더 안전
       //서버에서 값을 리턴해줄 때 사용자 정보를 받고 그 값을 로컬스토리지에 저장해준 다음에 불러오면 된다
-      setUser("logged-in-user");
+      setUser(user_name);
     }
   }, []);
 
