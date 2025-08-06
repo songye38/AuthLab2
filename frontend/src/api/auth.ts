@@ -24,9 +24,11 @@ export async function registerUser(email: string, password: string, name: string
 export async function loginUser(email: string, password: string) {
     try {
         const response = await api.post("/users/login", { email, password });
-        const { access_token } = response.data;
-        localStorage.setItem("access_token", access_token); // 여기 저장!
-        return response.data; // { access_token, token_type } 형태로 올 거야
+        const { access_token, user } = response.data;
+
+        localStorage.setItem("access_token", access_token);
+        localStorage.setItem("user_name", user.name);
+        return { access_token, user };  // 객체 형태로 둘 다 반환
     } catch (error: any) {
         throw new Error(error.response?.data?.detail || "로그인 실패");
     }
