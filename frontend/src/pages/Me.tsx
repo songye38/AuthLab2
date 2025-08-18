@@ -15,7 +15,7 @@ const Me = () => {
 
 
     useEffect(() => {
-        fetch("/me", { credentials: "include" }) // 쿠키 전송
+        fetch("https://authlab-server2-production.up.railway.app/users/me", { credentials: "include" }) // 쿠키 전송
             .then(res => {
                 if (!res.ok) throw new Error("Not authenticated");
                 return res.json();
