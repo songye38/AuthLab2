@@ -21,6 +21,7 @@ const Me = () => {
                 return res.json();
             })
             .then(data => {
+                console.log("Me page fetch data:", data);
                 login(data.id); // useAuth() 안 user 세팅
             })
             .catch(() => logout());
