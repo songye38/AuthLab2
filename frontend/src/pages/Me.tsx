@@ -1,16 +1,30 @@
 import { useAuth } from "../hooks/useAuth";
+import { useEffect } from "react";
 import { useLocation } from "react-router-dom";
 import LoggedInView from "../components/LoggedInView";
 import LoggedOutView from "../components/LoggedOutView";
 
 const Me = () => {
-    const { user } = useAuth();
+    const { user, login, logout } = useAuth();
     const location = useLocation();
     const query = new URLSearchParams(location.search);
     const loginSuccess = query.get("login"); // "success"인지 확인
 
     console.log("Me page user:", user, "Login success:", loginSuccess);
 
+
+
+    useEffect(() => {
+        fetch("/me", { credentials: "include" }) // 쿠키 전송
+            .then(res => {
+                if (!res.ok) throw new Error("Not authenticated");
+                return res.json();
+            })
+            .then(data => {
+                login(data.id); // useAuth() 안 user 세팅
+            })
+            .catch(() => logout());
+    }, [login, logout]);
     return (
         <>
             {user ? (
