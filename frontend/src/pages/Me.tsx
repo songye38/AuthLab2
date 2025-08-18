@@ -25,7 +25,7 @@ const Me = () => {
                 login(data.id); // useAuth() 안 user 세팅
             })
             .catch(() => logout());
-    }, [login, logout]);
+    }, []);
     return (
         <>
             {user ? (
