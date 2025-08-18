@@ -9,6 +9,8 @@ interface Props {
 }
 
 const LoggedInView: React.FC<Props> = ({ userId, loginSuccess }) => {
+  console.log("userid",userId);
+  console.log("loginSuccess", loginSuccess);
   return (
     <div className="flex flex-col items-center gap-4 p-6 bg-gray-100 rounded-2xl shadow-md">
       {loginSuccess === "success" && (
