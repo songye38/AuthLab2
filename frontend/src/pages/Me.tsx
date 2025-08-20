@@ -15,18 +15,42 @@ const Me = () => {
 
 
 useEffect(() => {
-    console.log("Fetching user data...");
-    fetch("https://authlab-server2-production.up.railway.app/users/me", { credentials: "include" })
-        .then(res => {
-            if (!res.ok) throw new Error("Not authenticated");
-            return res.json();
-        })
-        .then(data => {
-            console.log("Me page fetch data:", data);
-            login(data.user.id); // user 객체 안의 id 사용
-        })
-        .catch(() => logout());
+  console.log("Fetching access token...");
+
+  // 1. refresh API 호출해서 access_token 받기
+  fetch("https://authlab-server2-production.up.railway.app/refresh", {
+    method: "POST",
+    credentials: "include", // refresh_token 쿠키 전송
+  })
+    .then(res => {
+      if (!res.ok) throw new Error("Refresh failed");
+      return res.json();
+    })
+    .then(data => {
+      const accessToken = data.access_token;
+      localStorage.setItem("accessToken", accessToken);
+
+      // 2. access_token으로 /users/me 호출
+      return fetch("https://authlab-server2-production.up.railway.app/users/me", {
+        headers: {
+          Authorization: `Bearer ${accessToken}`,
+        },
+      });
+    })
+    .then(res => {
+      if (!res.ok) throw new Error("Not authenticated");
+      return res.json();
+    })
+    .then(data => {
+      console.log("Me page fetch data:", data);
+      login(data.user.id); // user 객체 안의 id 사용
+    })
+    .catch(err => {
+      console.error(err);
+      logout();
+    });
 }, []);
+
     return (
         <>
             {user ? (
