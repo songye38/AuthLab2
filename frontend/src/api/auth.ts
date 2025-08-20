@@ -2,7 +2,7 @@ import axios from "axios";
 
 // axios 인스턴스 만들어서 baseURL 지정 (Railway 서버 주소로 바꿔줘)
 const api = axios.create({
-    baseURL: "https://authlab-server2-production.up.railway.app",
+    baseURL: "https://api.songyeserver.info",
     withCredentials: true, // 쿠키 같은 것도 필요하면 true로
 });
 

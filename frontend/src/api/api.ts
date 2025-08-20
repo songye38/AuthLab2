@@ -2,7 +2,7 @@
 import axios from "axios";
 
 const api = axios.create({
-  baseURL: "https://authlab-server2-production.up.railway.app",
+  baseURL: "https://api.songyeserver.info",
   withCredentials: true,
 });
 
@@ -31,7 +31,7 @@ api.interceptors.response.use(
       try {
         // 👉 refresh_token은 httponly 쿠키에 있으니 withCredentials 필수
         const res = await axios.post(
-          "https://authlab-server2-production.up.railway.app/users/refresh",
+          "https://api.songyeserver.info/users/refresh",
           {},
           { withCredentials: true }
         );
