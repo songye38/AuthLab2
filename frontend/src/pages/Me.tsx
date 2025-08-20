@@ -18,7 +18,7 @@ useEffect(() => {
   console.log("Fetching access token...");
 
   // 1. refresh API 호출해서 access_token 받기
-  fetch("https://authlab-server2-production.up.railway.app/users/refresh", {
+  fetch("https://api.songyeserver.info/users/refresh", {
     method: "POST",
     credentials: "include", // refresh_token 쿠키 전송
   })
@@ -31,7 +31,7 @@ useEffect(() => {
       localStorage.setItem("accessToken", accessToken);
 
       // 2. access_token으로 /users/me 호출
-      return fetch("https://authlab-server2-production.up.railway.app/users/me", {
+      return fetch("https://api.songyeserver.info/users/me", {
         headers: {
           Authorization: `Bearer ${accessToken}`,
         },
