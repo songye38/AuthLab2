@@ -27,15 +27,16 @@ const Login = () => {
     }
   };
 
+
   // 🔗 소셜 로그인 함수
   const handleGoogleLogin = () => {
     window.location.href =
-      "https://songyeserver.info/users/login/google";
+      "https://api.songyeserver.info/users/login/google";
   };
 
   const handleKakaoLogin = () => {
     window.location.href =
-      "https://songyeserver.info/users/login/kakao";
+      "https://api.songyeserver.info/users/login/kakao";
   };
 
   return (
