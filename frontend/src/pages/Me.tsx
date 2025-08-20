@@ -18,7 +18,7 @@ useEffect(() => {
   console.log("Fetching access token...");
 
   // 1. refresh API 호출해서 access_token 받기
-  fetch("https://authlab-server2-production.up.railway.app/refresh", {
+  fetch("https://authlab-server2-production.up.railway.app/users/refresh", {
     method: "POST",
     credentials: "include", // refresh_token 쿠키 전송
   })
