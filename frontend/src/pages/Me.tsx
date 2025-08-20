@@ -16,16 +16,16 @@ const Me = () => {
 
 useEffect(() => {
     console.log("Fetching user data...");
-    // fetch("https://authlab-server2-production.up.railway.app/users/me", { credentials: "include" })
-    //     .then(res => {
-    //         if (!res.ok) throw new Error("Not authenticated");
-    //         return res.json();
-    //     })
-    //     .then(data => {
-    //         console.log("Me page fetch data:", data);
-    //         login(data.user.id); // user 객체 안의 id 사용
-    //     })
-    //     .catch(() => logout());
+    fetch("https://authlab-server2-production.up.railway.app/users/me", { credentials: "include" })
+        .then(res => {
+            if (!res.ok) throw new Error("Not authenticated");
+            return res.json();
+        })
+        .then(data => {
+            console.log("Me page fetch data:", data);
+            login(data.user.id); // user 객체 안의 id 사용
+        })
+        .catch(() => logout());
 }, []);
     return (
         <>
