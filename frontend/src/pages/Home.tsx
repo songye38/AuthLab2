@@ -8,7 +8,7 @@ const Home = () => {
     return (
         <>
             {user ? (
-                <LoggedInView userName={user} />
+                <LoggedInView userName={user} loginSuccess={"success"} />
             ) : (
                 <LoggedOutView />
             )}
