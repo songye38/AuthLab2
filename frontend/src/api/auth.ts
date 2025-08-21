@@ -25,6 +25,7 @@ export async function loginUser(email: string, password: string) {
     try {
         const response = await api.post("/users/login", { email, password });
         const { user } = response.data;
+        console.log("로그인 성공:", user);
         localStorage.setItem("user_name", user.name);
         return { user };  // 객체 형태로 둘 다 반환
     } catch (error: any) {
