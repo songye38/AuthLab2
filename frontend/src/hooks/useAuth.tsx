@@ -17,7 +17,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
   };
   const logout = () => {
     setUser(null);
-    localStorage.removeItem("userName"); // 얘도 같이 지워줘야지
+    sessionStorage.removeItem("userName"); // 얘도 같이 지워줘야지
   };
 
   useEffect(() => {
