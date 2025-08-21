@@ -1,3 +1,4 @@
+import { useEffect } from "react";
 import axios from "axios";
 
 const api = axios.create({
@@ -41,5 +42,20 @@ api.interceptors.response.use(
     return Promise.reject(error);
   }
 );
+
+// ✅ 로그인 상태 복원 + 세션 저장
+export const useRestoreUser = (setUser: (name: string | null) => void) => {
+  useEffect(() => {
+    api.get("/users/me")
+      .then((res) => {
+        setUser(res.data.name);
+        sessionStorage.setItem("userName", res.data.name);
+      })
+      .catch(() => {
+        setUser(null);
+        sessionStorage.removeItem("userName");
+      });
+  }, []);
+};
 
 export default api;

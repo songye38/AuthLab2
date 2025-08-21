@@ -1,5 +1,5 @@
 import { createContext, useContext, useState, useEffect, ReactNode } from "react";
-
+import api from "../api/api"; // api 인스턴스 가져오기
 interface AuthContextType {
   user: string | null;
   login: (userId: string) => void;
@@ -21,16 +21,10 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
   };
 
   useEffect(() => {
-    fetch("https://api.songyeserver.info/users/me", {
-      credentials: "include", // 쿠키 자동 전송
-    })
-      .then(res => {
-        if (!res.ok) throw new Error("Not authenticated");
-        return res.json();
-      })
-      .then(data => {
-        setUser(data.name);
-        sessionStorage.setItem("userName", data.name); // ✅ 세션에도 저장
+    api.get("/users/me")
+      .then((res) => {
+        setUser(res.data.name);
+        sessionStorage.setItem("userName", res.data.name); // 세션에도 저장
       })
       .catch(() => {
         setUser(null);
