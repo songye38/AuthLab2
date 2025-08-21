@@ -11,23 +11,33 @@ const AuthContext = createContext<AuthContextType | undefined>(undefined);
 export const AuthProvider = ({ children }: { children: ReactNode }) => {
   const [user, setUser] = useState<string | null>(null);
 
-  const login = (userName: string) => setUser(userName);
+  const login = (userName: string) => {
+    setUser(userName);
+    sessionStorage.setItem("userName", userName); // 세션 스토리지에 저장
+  };
   const logout = () => {
     setUser(null);
-    localStorage.removeItem("access_token"); // 얘도 같이 지워줘야지
+    localStorage.removeItem("userName"); // 얘도 같이 지워줘야지
   };
 
-  // ✅ 마운트 시 로그인 상태 복원
   useEffect(() => {
-    const token = localStorage.getItem("access_token");
-    const user_name = localStorage.getItem("user_name");
-    if (token) {
-      // 예시로 그냥 토큰이 있으면 로그인된 걸로 치는 경우
-      // 실제로는 토큰 decode하거나 사용자 정보 요청해서 setUser 해주는 게 더 안전
-      //서버에서 값을 리턴해줄 때 사용자 정보를 받고 그 값을 로컬스토리지에 저장해준 다음에 불러오면 된다
-      setUser(user_name);
-    }
+    fetch("https://api.songyeserver.info/users/me", {
+      credentials: "include", // 쿠키 자동 전송
+    })
+      .then(res => {
+        if (!res.ok) throw new Error("Not authenticated");
+        return res.json();
+      })
+      .then(data => {
+        setUser(data.name);
+        sessionStorage.setItem("userName", data.name); // ✅ 세션에도 저장
+      })
+      .catch(() => {
+        setUser(null);
+        sessionStorage.removeItem("userName"); // 실패 시 세션 제거
+      });
   }, []);
+
 
   return (
     <AuthContext.Provider value={{ user, login, logout }}>
