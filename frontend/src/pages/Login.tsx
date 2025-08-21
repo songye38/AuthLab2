@@ -19,8 +19,8 @@ const Login = () => {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     try {
-      const { access_token, user } = await loginUser(email, password);
-      console.log("로그인 성공 전체:", { access_token, user });
+      const { user } = await loginUser(email, password);
+      console.log("로그인 성공 전체:", { user });
       login(user.name); // userId 저장
     } catch (error: any) {
       alert(error.message);
