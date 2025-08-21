@@ -27,6 +27,7 @@ useEffect(() => {
     })
     .then(data => {
       console.log("Me page fetch data:", data);
+      console.log("user",user);
       login(data.id);
     })
     .catch(err => {
