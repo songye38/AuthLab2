@@ -12,9 +12,14 @@ const Login = () => {
 
   useEffect(() => {
     if (user) {
-      navigate("/");
+      navigate("/", { replace: true }); // 로그인 상태면 홈으로 이동
     }
   }, [user, navigate]);
+
+  if (user) {
+    // 화면은 렌더링하지 않고 null만 반환
+    return null;
+  }
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
