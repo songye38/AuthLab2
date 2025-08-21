@@ -41,7 +41,6 @@ export async function logoutUser() {
     } catch (error) {
         console.warn("서버 로그아웃 실패 (무시 가능)", error);
     } finally {
-        localStorage.removeItem("access_token"); // 로컬 토큰 삭제
         window.location.href = "/login"; // 로그인 페이지로 이동
     }
 }

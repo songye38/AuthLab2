@@ -15,35 +15,19 @@ const Me = () => {
 
 
 useEffect(() => {
-  console.log("Fetching access token...");
+  console.log("Fetching me page with cookie access_token...");
 
-  // 1. refresh API 호출해서 access_token 받기
-  fetch("https://api.songyeserver.info/users/refresh", {
-    method: "POST",
-    credentials: "include", // refresh_token 쿠키 전송
+  fetch("https://api.songyeserver.info/users/me", {
+    method: "GET",
+    credentials: "include", // access_token 쿠키 자동 포함
   })
-    .then(res => {
-      if (!res.ok) throw new Error("Refresh failed");
-      return res.json();
-    })
-    .then(data => {
-      const accessToken = data.access_token;
-      localStorage.setItem("accessToken", accessToken);
-
-      // 2. access_token으로 /users/me 호출
-      return fetch("https://api.songyeserver.info/users/me", {
-        headers: {
-          Authorization: `Bearer ${accessToken}`,
-        },
-      });
-    })
     .then(res => {
       if (!res.ok) throw new Error("Not authenticated");
       return res.json();
     })
     .then(data => {
       console.log("Me page fetch data:", data);
-      login(data.user.id); // user 객체 안의 id 사용
+      login(data.id);
     })
     .catch(err => {
       console.error(err);
@@ -51,10 +35,11 @@ useEffect(() => {
     });
 }, []);
 
+
     return (
         <>
             {user ? (
-                <LoggedInView userId={user} loginSuccess={loginSuccess} />
+                <LoggedInView userName={user} loginSuccess={loginSuccess} />
             ) : (
                 <LoggedOutView />
             )}

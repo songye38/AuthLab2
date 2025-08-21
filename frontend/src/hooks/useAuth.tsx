@@ -11,7 +11,7 @@ const AuthContext = createContext<AuthContextType | undefined>(undefined);
 export const AuthProvider = ({ children }: { children: ReactNode }) => {
   const [user, setUser] = useState<string | null>(null);
 
-  const login = (userId: string) => setUser(userId);
+  const login = (userName: string) => setUser(userName);
   const logout = () => {
     setUser(null);
     localStorage.removeItem("access_token"); // 얘도 같이 지워줘야지
