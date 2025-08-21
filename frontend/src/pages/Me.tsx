@@ -15,21 +15,21 @@ const Me = () => {
 
 
 
-  useEffect(() => {
-    console.log("Fetching me page with cookie access_token...");
+  // useEffect(() => {
+  //   console.log("Fetching me page with cookie access_token...");
 
-    api.get("/users/me") // withCredentials와 인터셉터 자동 적용
-      .then(res => {
-        console.log("Me page fetch data:", res.data);
-        login(res.data.name);
-        sessionStorage.setItem("userName", res.data.name); // 세션에도 저장
-      })
-      .catch(err => {
-        console.error("Failed to fetch user info:", err);
-        logout();
-        sessionStorage.removeItem("userName");
-      });
-  }, []);
+  //   api.get("/users/me") // withCredentials와 인터셉터 자동 적용
+  //     .then(res => {
+  //       console.log("Me page fetch data:", res.data);
+  //       login(res.data.name);
+  //       sessionStorage.setItem("userName", res.data.name); // 세션에도 저장
+  //     })
+  //     .catch(err => {
+  //       console.error("Failed to fetch user info:", err);
+  //       logout();
+  //       sessionStorage.removeItem("userName");
+  //     })
+  // }, []);
 
 
   return (
